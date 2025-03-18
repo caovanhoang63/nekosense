@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc"
+  },
+  "license": "MIT",
+  "author": "Cao Van Hoang (caovanhoang204@gmail.com) & Nguyen Huynh Duy Hieu",
+  "repository": {
+    "url": "git+https://github.com/caovanhoang63/nekosense.git",
+    "type": "git"
   },
   "dependencies": {},
   "devDependencies": {
     "typescript": "^5.5.3"
   },
-  "private": true
+  "files": ["dist"]
 }
