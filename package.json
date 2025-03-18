@@ -21,6 +21,8 @@
     "type": "git"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
     "@eslint/js": "^9.22.0",
     "eslint": "^9.22.0",
     "husky": "^9.1.7",
