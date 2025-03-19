@@ -6,4 +6,5 @@ export interface TrackingEvent {
   preCallback?: Handler;
   afterCallback?: Handler;
   elementIds: string[];
+  options?: AddEventListenerOptions;
 }
