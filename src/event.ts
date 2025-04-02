@@ -5,6 +5,8 @@ export interface TrackingEvent {
   handler: Handler;
   preCallback?: Handler;
   afterCallback?: Handler;
-  elementIds: string[];
+  elementIds?: string[];
+  elementPatternIds?: string[];
   options?: AddEventListenerOptions;
 }
+// product-*

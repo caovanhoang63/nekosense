@@ -7,5 +7,7 @@ function a() {
 }
 const Instance = new NekoSense();
 const HeatMap = new HeatMapTrack([]);
+
 Instance.add(HeatMap);
+
 Instance.start();

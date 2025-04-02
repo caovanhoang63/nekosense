@@ -1,6 +1,7 @@
 import { Config } from "./config.js";
 import { Handler } from "./types/handler.js";
 import { TrackingEvent } from "./event.js";
+import { Context } from "./context.js";
 
 const defaultConfig: Config = {
   endPoint: "https://api.nekosense.tech",
@@ -25,6 +26,7 @@ export default class NekoSense {
   }
 
   private track(trackingEvent: TrackingEvent) {
+    if (!trackingEvent.elementIds) return;
     if (trackingEvent.elementIds.length <= 0) {
       console.warn("Element id not specified");
       return;
@@ -36,16 +38,19 @@ export default class NekoSense {
         console.warn(`Element ${trackingEvent.elementIds[i]} not specified`);
         continue;
       }
-      addEventListenerOp;
       el.addEventListener(
         trackingEvent.type,
-        (this: HTMLElement, ev: UIEvent) => {
+        (ev: Event) => {
+          const ctx: Context = {
+            data: null,
+            config: this.config,
+          };
           for (const handler of this.handlerChain) {
-            handler(ev);
+            handler(ctx, el, ev as UIEvent);
           }
-          trackingEvent?.preCallback(this.config, ev);
-          trackingEvent.handler(this.config, ev);
-          trackingEvent.afterCallback(this.config, ev);
+          trackingEvent.preCallback?.(ctx, el, ev as UIEvent);
+          trackingEvent.handler(ctx, el, ev as UIEvent);
+          trackingEvent.afterCallback?.(ctx, el, ev as UIEvent);
         },
         trackingEvent.options,
       );
