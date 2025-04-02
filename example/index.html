@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nekosense</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h1>Nekosense Example</h1>
+      </div>
+      <div class="nav">
+        <button id="cartButton">Cart</button>
+      </div>
+    </header>
+
+    <section class="products">
+      <div class="product">
+        <img
+          src="https://placehold.co/600x400?text=nekosense"
+          alt="Product 1"
+        />
+        <h3>Product 1</h3>
+        <p>$20.00</p>
+        <button onclick="addToCart('Product 1', 20)">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img
+          src="https://placehold.co/600x400?text=nekosense"
+          alt="Product 2"
+        />
+        <h3>Product 2</h3>
+        <p>$30.00</p>
+        <button onclick="addToCart('Product 2', 30)">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img
+          src="https://placehold.co/600x400?text=nekosense"
+          alt="Product 3"
+        />
+        <h3>Product 3</h3>
+        <p>$40.00</p>
+        <button onclick="addToCart('Product 3', 40)">Add to Cart</button>
+      </div>
+    </section>
+
+    <div id="cartPopup" class="cart-popup">
+      <div class="cart-popup-content">
+        <h3>Your Cart</h3>
+        <ul id="cartItems"></ul>
+        <p>Total: $<span id="totalPrice">0</span></p>
+        <button id="closeCart">Close</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
