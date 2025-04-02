@@ -3,12 +3,12 @@ import { Handler } from "./types/handler.js";
 import { TrackingEvent } from "./event.js";
 import { Context } from "./context.js";
 
-const defaultConfig: Config = {
+export const defaultConfig: Config = {
   endPoint: "https://api.nekosense.tech",
   protocol: "http",
 };
 
-export default class NekoSense {
+export class NekoSense {
   private readonly config: Config;
   private readonly handlerChain: Handler[] = [];
   private readonly events: TrackingEvent[] = [];
@@ -26,35 +26,33 @@ export default class NekoSense {
   }
 
   private track(trackingEvent: TrackingEvent) {
-    if (!trackingEvent.elementIds) return;
-    if (trackingEvent.elementIds.length <= 0) {
+    if (!trackingEvent.elementIds || trackingEvent.elementIds.length === 0) {
       console.warn("Element id not specified");
       return;
     }
-
-    for (let i = 0; i < trackingEvent.elementIds.length; i++) {
-      const el = document.getElementById(trackingEvent.elementIds[i]);
-      if (!el) {
-        console.warn(`Element ${trackingEvent.elementIds[i]} not specified`);
-        continue;
-      }
-      el.addEventListener(
+    const elements = trackingEvent.elementIds
+      .map((id) => document.getElementById(id))
+      .filter((el) => el);
+    if (elements.length === 0) {
+      console.warn("No valid elements found");
+      return;
+    }
+    elements.forEach((el) => {
+      el?.addEventListener(
         trackingEvent.type,
         (ev: Event) => {
           const ctx: Context = {
             data: null,
             config: this.config,
           };
-          for (const handler of this.handlerChain) {
-            handler(ctx, el, ev as UIEvent);
-          }
-          trackingEvent.preCallback?.(ctx, el, ev as UIEvent);
+          this.handlerChain.forEach((handler) =>
+            handler(ctx, el, ev as UIEvent),
+          );
           trackingEvent.handler(ctx, el, ev as UIEvent);
-          trackingEvent.afterCallback?.(ctx, el, ev as UIEvent);
         },
         trackingEvent.options,
       );
-    }
+    });
   }
 
   public interceptor(callback: Handler) {

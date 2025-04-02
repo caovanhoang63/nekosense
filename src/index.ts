@@ -1,13 +1,8 @@
-import NekoSense from "./nekosense.js";
-import { HeatMapTrack } from "./heatMapTrack.js";
-
-console.log("Happy developing ✨");
-function a() {
-  console.log("Happy");
-}
-const Instance = new NekoSense();
-const HeatMap = new HeatMapTrack([]);
-
-Instance.add(HeatMap);
-
-Instance.start();
+export { NekoSense, defaultConfig } from "./nekosense.js";
+export { HeatMapTrack } from "./heatMapTrack.js";
+export * from "./config.js";
+export * from "./errors.js";
+export * from "./context.js";
+export * from "./event.js";
+export * from "./types/utils.js";
+export * from "./types/handler.js";
