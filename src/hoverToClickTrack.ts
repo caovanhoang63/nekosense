@@ -1,5 +1,6 @@
 import { TrackingEvent, TrackingEventParams } from "./event.js";
 import { Handler } from "./types/handler.js";
+import { nekoFetch } from "./types/utils.js";
 
 export class HoverToClickTrack implements TrackingEvent {
   public type: string = "mouseenter";
@@ -17,18 +18,9 @@ export class HoverToClickTrack implements TrackingEvent {
       const hoverStart = this.hoverStartTimes.get(id);
       if (hoverStart) {
         const duration = Date.now() - hoverStart;
+        context.data.duration = duration;
         if (duration > 1000) {
-          fetch(context.config.endPoint, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({
-              ele: id,
-              event: "hover-to-click",
-              duration,
-            }),
-          }).catch((e) => console.error(e));
+          nekoFetch(context, ele, "hover-to-click");
         }
       }
     };

@@ -1,21 +1,18 @@
 import { TrackingEvent, TrackingEventParams } from "./event.js";
 import { Handler } from "./types/handler.js";
+import { nekoFetch } from "./types/utils.js";
 
 export class MouseClickTrack implements TrackingEvent {
   public type: string = "click";
   handler: Handler = (context, ele, event) => {
-    fetch(context.config.endPoint, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        event: "click",
-        eleId: ele.id,
-      }),
-    }).catch((e) => {
-      console.error(e);
-    });
+    let ok = false;
+    nekoFetch(context, ele, "click");
+    if (!ok) {
+      navigator.sendBeacon(
+        context.config.endPoint,
+        JSON.stringify({ event: "click", eleId: ele.id }),
+      );
+    }
   };
   elementIds?: string[] | undefined;
   elementPatternIds?: string[] | undefined;

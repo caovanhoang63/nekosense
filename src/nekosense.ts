@@ -85,7 +85,6 @@ export class NekoSense {
           console.error(e);
         });
         mousePositions = [];
-      } else {
       }
     }, 700);
   }

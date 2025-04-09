@@ -12,7 +12,6 @@ const event = new MouseClickTrack({
     "product-product-3",
   ],
   preHandler: (ctx, ele, event) => {
-    console.log(ele.id);
     ctx.data.user = {
       userId: 1,
     };
