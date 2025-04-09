@@ -60,4 +60,33 @@ export class NekoSense {
   public interceptor(callback: Handler) {
     this.handlerChain.push(callback);
   }
+
+  public heatMap() {
+    let mousePositions: { x: number; y: number }[] = [];
+    document.addEventListener("mousemove", (event) => {
+      const position = {
+        x: event.clientX,
+        y: event.clientY,
+        timestamp: Date.now(),
+      };
+      mousePositions.push(position);
+    });
+    setInterval(() => {
+      if (mousePositions.length > 0) {
+        fetch(this.config.endPoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mousePositions: mousePositions,
+          }),
+        }).catch((e) => {
+          console.error(e);
+        });
+        mousePositions = [];
+      } else {
+      }
+    }, 700);
+  }
 }
