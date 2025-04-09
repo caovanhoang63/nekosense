@@ -1,4 +1,4 @@
-import { TrackingEvent } from "./event.js";
+import { TrackingEvent, TrackingEventParams } from "./event.js";
 import { Handler } from "./types/handler.js";
 
 export class MouseClickTrack implements TrackingEvent {
@@ -12,7 +12,6 @@ export class MouseClickTrack implements TrackingEvent {
       body: JSON.stringify({
         event: "click",
         eleId: ele.id,
-        data: JSON.stringify(context.data),
       }),
     }).catch((e) => {
       console.error(e);
@@ -21,8 +20,9 @@ export class MouseClickTrack implements TrackingEvent {
   elementIds?: string[] | undefined;
   elementPatternIds?: string[] | undefined;
   options?: AddEventListenerOptions | undefined;
-  constructor(elementIds: string[], options?: AddEventListenerOptions) {
-    this.elementIds = elementIds;
-    this.options = options || {};
+
+  constructor(params: TrackingEventParams) {
+    this.elementIds = params.elementIds || [];
+    this.options = params.options || {};
   }
 }

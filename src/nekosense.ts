@@ -49,6 +49,7 @@ export class NekoSense {
           this.handlerChain.forEach((handler) =>
             handler(ctx, el, ev as UIEvent),
           );
+          trackingEvent.preHandler?.(ctx, el, ev as UIEvent);
           trackingEvent.handler(ctx, el, ev as UIEvent);
         },
         trackingEvent.options,
