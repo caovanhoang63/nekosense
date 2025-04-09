@@ -4,7 +4,7 @@ import { TrackingEvent } from "./event.js";
 import { Context } from "./context.js";
 
 export const defaultConfig: Config = {
-  endPoint: "https://api.nekosense.tech",
+  endPoint: "http://localhost:3000",
   protocol: "http",
 };
 
@@ -20,6 +20,7 @@ export class NekoSense {
   }
 
   public start() {
+    console.log("Starting NekoSense");
     for (const event of this.events) {
       this.track(event);
     }
@@ -42,7 +43,7 @@ export class NekoSense {
         trackingEvent.type,
         (ev: Event) => {
           const ctx: Context = {
-            data: null,
+            data: {},
             config: this.config,
           };
           this.handlerChain.forEach((handler) =>

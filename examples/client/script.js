@@ -61,7 +61,7 @@ function renderProducts() {
     productCard.className =
       "product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg";
     productCard.innerHTML = `
-      <a href="product.html?id=${product.id}" class="block">
+      <a id="product-${product.id}" href="product.html?id=${product.id}" class="block">
         <div class="overflow-hidden">
           <img src="${product.image}" alt="${product.name}" class="product-image w-full h-48 object-cover">
         </div>

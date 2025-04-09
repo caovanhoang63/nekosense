@@ -1,5 +1,7 @@
 export { NekoSense, defaultConfig } from "./nekosense.js";
 export { HeatMapTrack } from "./heatMapTrack.js";
+export { MouseClickTrack } from "./mouseClickTrack.js";
+export { HoverToClickTrack } from "./hoverToClickTrack.js";
 export * from "./config.js";
 export * from "./errors.js";
 export * from "./context.js";
