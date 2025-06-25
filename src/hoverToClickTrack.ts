@@ -17,11 +17,8 @@ export class HoverToClickTrack implements TrackingEvent {
     const onClick = () => {
       const hoverStart = this.hoverStartTimes.get(id);
       if (hoverStart) {
-        const duration = Date.now() - hoverStart;
-        context.data.duration = duration;
-        if (duration > 1000) {
-          nekoFetch(context, ele, "hover-to-click");
-        }
+        context.data.duration = Date.now() - hoverStart;
+        nekoFetch(context, ele, "hover-to-click");
       }
     };
     ele.addEventListener("mouseleave", onLeave, { once: true });

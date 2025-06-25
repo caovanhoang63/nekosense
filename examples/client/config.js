@@ -4,7 +4,7 @@ import {
   MouseClickTrack,
 } from "./../../dist/index.js";
 const instance = new NekoSense();
-const event = new MouseClickTrack({
+const event = new HoverToClickTrack({
   elementIds: [
     "header",
     "product-product-1",

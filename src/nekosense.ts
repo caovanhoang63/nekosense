@@ -79,7 +79,10 @@ export class NekoSense {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            mousePositions: mousePositions,
+            event: "heatMap",
+            data: {
+              mousePositions,
+            },
           }),
         }).catch((e) => {
           console.error(e);
