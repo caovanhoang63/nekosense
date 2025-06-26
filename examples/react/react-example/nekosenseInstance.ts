@@ -1,4 +1,9 @@
-import { Config, MouseClickTrack, NekoSense } from "../../../src";
+import {
+  Config,
+  HoverToClickTrack,
+  MouseClickTrack,
+  NekoSense,
+} from "../../../src";
 
 const config: Config = {
   protocol: "http",
@@ -16,6 +21,11 @@ const mouseClickEvent = new MouseClickTrack({
   ],
 });
 
+const hoverToClick = new HoverToClickTrack({
+  elementIds: ["product-product-1"],
+});
+
 nekosenseInstance.pagePerformance();
 // nekosenseInstance.heatMap();
 nekosenseInstance.add(mouseClickEvent);
+nekosenseInstance.add(hoverToClick);
