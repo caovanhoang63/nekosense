@@ -2,7 +2,7 @@ import { Config, MouseClickTrack, NekoSense } from "../../../src";
 
 const config: Config = {
   protocol: "http",
-  endPoint: "http://nekosense.hxio.dev:8080/event",
+  endPoint: "http://157.180.78.90:8080/event",
 };
 export const nekosenseInstance = new NekoSense(config);
 
