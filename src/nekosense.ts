@@ -25,6 +25,8 @@ export class NekoSense {
     for (const event of this.events) {
       this.trackElementEvent(event);
     }
+    this.pageView();
+    this.timeOnPage();
   }
 
   private trackElementEvent(trackingEvent: TrackingEvent) {
@@ -84,6 +86,34 @@ export class NekoSense {
         console.error("NekoSense Error:", e);
       });
     }
+  }
+
+  public pageView() {
+    this.sendData("pageView", {});
+  }
+
+  public timeOnPage() {
+    let pageViewStartTime = Date.now();
+
+    const sendTime = () => {
+      if (pageViewStartTime > 0) {
+        const duration = Date.now() - pageViewStartTime;
+        if (duration > 100) {
+          this.sendData("timeOnPage", { duration });
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        sendTime();
+        pageViewStartTime = 0;
+      } else if (document.visibilityState === "visible") {
+        pageViewStartTime = Date.now();
+      }
+    });
+
+    document.addEventListener("pagehide", sendTime, { capture: true });
   }
 
   public pagePerformance() {

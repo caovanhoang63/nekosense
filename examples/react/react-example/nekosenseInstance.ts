@@ -7,7 +7,7 @@ import {
 
 const config: Config = {
   protocol: "http",
-  endPoint: "http://157.180.78.90:8080/event",
+  endPoint: "http://localhost:8080/event",
 };
 export const nekosenseInstance = new NekoSense(config);
 
