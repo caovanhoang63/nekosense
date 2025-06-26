@@ -1,8 +1,10 @@
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../data/products";
 import Cart from "../components/Cart";
 import { ShoppingCart } from "lucide-react";
+import { useEffect } from "react";
+import { nekosenseInstance } from "../../nekosenseInstance.ts";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +15,9 @@ const ProductDetailPage = () => {
   if (!product) {
     return <div>Product not found</div>;
   }
-
+  useEffect(() => {
+    nekosenseInstance.start();
+  }, []);
   return (
     <>
       <div className="mb-4">

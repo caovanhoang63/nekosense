@@ -17,7 +17,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div className="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+    <div
+      id={`product-${product.id}`}
+      className="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg"
+    >
       <Link to={`/product/${product.id}`} className="block">
         <div className="overflow-hidden">
           <img
