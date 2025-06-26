@@ -1,4 +1,4 @@
-import { HeatMapTrack, MouseClickTrack, NekoSense } from "nekosense";
+import { HeatMapTrack, MouseClickTrack, NekoSense } from "../../../src";
 
 export const nekosenseInstance = new NekoSense();
 
@@ -30,5 +30,7 @@ const mouseClickEvent = new MouseClickTrack({
     };
   },
 });
-nekosenseInstance.add(heatMapEvent);
-nekosenseInstance.add(mouseClickEvent);
+nekosenseInstance.pagePerformance();
+// nekosenseInstance.heatMap();
+// nekosenseInstance.add(heatMapEvent);
+// nekosenseInstance.add(mouseClickEvent);

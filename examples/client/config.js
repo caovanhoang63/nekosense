@@ -18,7 +18,7 @@ const event = new HoverToClickTrack({
   },
 });
 instance.add(event);
-// instance.heatMap(window);
+instance.heatMap(window);
 window.addEventListener("DOMContentLoaded", function () {
   instance.start();
 });

@@ -2,6 +2,7 @@ import { Config } from "./config.js";
 import { Handler } from "./types/handler.js";
 import { TrackingEvent } from "./event.js";
 import { Context } from "./context.js";
+import { onLCP, onCLS, onINP, Metric } from "web-vitals";
 
 export const defaultConfig: Config = {
   endPoint: "http://localhost:3000",
@@ -22,11 +23,11 @@ export class NekoSense {
   public start() {
     console.log("Starting NekoSense");
     for (const event of this.events) {
-      this.track(event);
+      this.trackElementEvent(event);
     }
   }
 
-  private track(trackingEvent: TrackingEvent) {
+  private trackElementEvent(trackingEvent: TrackingEvent) {
     if (!trackingEvent.elementIds || trackingEvent.elementIds.length === 0) {
       console.warn("Element id not specified");
       return;
@@ -61,8 +62,41 @@ export class NekoSense {
     this.handlerChain.push(callback);
   }
 
+  private sendData(eventName: string, eventData: object) {
+    const payload = {
+      event: eventName,
+      data: eventData,
+      url: window.location.href,
+      timestamp: Date.now(),
+    };
+
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(this.config.endPoint, JSON.stringify(payload));
+    } else {
+      fetch(this.config.endPoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        keepalive: true,
+      }).catch((e) => {
+        console.error("NekoSense Error:", e);
+      });
+    }
+  }
+
+  public pagePerformance() {
+    const trackMetric = (metric: Metric) => {
+      this.sendData("performance", metric);
+    };
+    onLCP(trackMetric);
+    onCLS(trackMetric);
+    onINP(trackMetric);
+  }
+
   public heatMap() {
-    let mousePositions: { x: number; y: number }[] = [];
+    let mousePositions: { x: number; y: number; timestamp: number }[] = [];
     document.addEventListener("mousemove", (event) => {
       const position = {
         x: event.clientX,
@@ -73,20 +107,7 @@ export class NekoSense {
     });
     setInterval(() => {
       if (mousePositions.length > 0) {
-        fetch(this.config.endPoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            event: "heatMap",
-            data: {
-              mousePositions,
-            },
-          }),
-        }).catch((e) => {
-          console.error(e);
-        });
+        this.sendData("heatMap", { mousePositions });
         mousePositions = [];
       }
     }, 700);
