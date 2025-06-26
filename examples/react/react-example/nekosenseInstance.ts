@@ -1,21 +1,11 @@
-import { HeatMapTrack, MouseClickTrack, NekoSense } from "../../../src";
+import { Config, MouseClickTrack, NekoSense } from "../../../src";
 
-export const nekosenseInstance = new NekoSense();
+const config: Config = {
+  protocol: "http",
+  endPoint: "http://nekosense.hxio.dev:8080/event",
+};
+export const nekosenseInstance = new NekoSense(config);
 
-const heatMapEvent = new HeatMapTrack({
-  elementIds: [
-    "header",
-    "product-product-1",
-    "product-product-2",
-    "product-product-3",
-    "product-product-4",
-  ],
-  preHandler: (ctx, ele, event) => {
-    ctx.data.user = {
-      userId: 1,
-    };
-  },
-});
 const mouseClickEvent = new MouseClickTrack({
   elementIds: [
     "header",
@@ -24,13 +14,8 @@ const mouseClickEvent = new MouseClickTrack({
     "product-product-3",
     "product-product-4",
   ],
-  preHandler: (ctx, ele, event) => {
-    ctx.data.user = {
-      userId: 1,
-    };
-  },
 });
+
 nekosenseInstance.pagePerformance();
 // nekosenseInstance.heatMap();
-// nekosenseInstance.add(heatMapEvent);
-// nekosenseInstance.add(mouseClickEvent);
+nekosenseInstance.add(mouseClickEvent);

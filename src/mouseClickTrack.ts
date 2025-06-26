@@ -10,7 +10,11 @@ export class MouseClickTrack implements TrackingEvent {
     if (!ok) {
       navigator.sendBeacon(
         context.config.endPoint,
-        JSON.stringify({ event: "click", eleId: ele.id }),
+        JSON.stringify({
+          event: "click",
+          eleId: ele.id,
+          timestamp: Date.now(),
+        }),
       );
     }
   };
