@@ -2,8 +2,11 @@
   "name": "nekosense",
   "version": "1.0.4",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src"
+  ],
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -32,9 +35,6 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1"
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@types/lodash": "^4.17.16",
     "@types/lodash-es": "^4.17.12",
